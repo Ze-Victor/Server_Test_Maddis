@@ -1,11 +1,10 @@
 const express = require('express')
+const UserControllers = require('../src/controllers/userControllers')
+
+const userControllers = new UserControllers
 
 const routes = express.Router()
 
-routes.get('/', (request, response) => {
-  return response.status(200).json({
-    msg: 'Teste'
-  })
-})
+routes.get('/', userControllers.index)
 
 module.exports = routes
