@@ -11,7 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "ajv": "^8.6.3",
+    "ajv-formats": "^2.1.1",
+    "express": "^4.17.1",
+    "knex": "^0.95.11",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"

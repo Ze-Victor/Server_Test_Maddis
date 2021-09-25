@@ -1,10 +1,14 @@
 const express = require('express')
 const UserControllers = require('../src/controllers/userControllers')
+const midUser = require('../src/middlewares/middleware.user')
+const router = express.Router()
+
+router.post('/', midUser)
 
 const userControllers = new UserControllers
 
-const routes = express.Router()
+router.get('/', userControllers.index)
 
-routes.get('/', userControllers.index)
+router.post('/', userControllers.create)
 
-module.exports = routes
+module.exports = router
