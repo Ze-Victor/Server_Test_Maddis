@@ -68,6 +68,18 @@ class userControllers {
     }
 
   }
+  async delete(request, response) {
+    try {
+      const id = request.query.id
+
+      await knex('user').where(id).del()
+
+    } catch (err) {
+      return response.status(400).json({
+        error: err
+      })
+    }
+  }
 }
 
 module.exports = userControllers

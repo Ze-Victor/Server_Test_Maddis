@@ -1,12 +1,14 @@
 const express = require('express')
-const routes = require('./routes')
+const routesUser = require('./routes/routes.user')
+const routesResource = require('./routes/routes.resources')
 
 const PORT = process.env.PORT || 3333
 
 const app = express()
 
 app.use(express.json())
-app.use(routes)
+app.use(routesUser)
+app.use(routesResource)
 
 app.listen(PORT, () => {
   console.log('Server Start...')
