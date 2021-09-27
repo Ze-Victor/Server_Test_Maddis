@@ -8,20 +8,22 @@ class userControllers {
   }
   async create(request, response) {
 
-    const {
-      name,
-      email,
-      user,
-      password
-    } = request.body
-
-    const user_insert = {
-      name,
-      email,
-      user,
-      password
-    }
     try {
+
+      const {
+        name,
+        email,
+        user,
+        password
+      } = request.body
+
+      const user_insert = {
+        name,
+        email,
+        user,
+        password
+      }
+
       await knex('user').insert(user_insert)
 
       return response.status(200).json({
@@ -29,6 +31,37 @@ class userControllers {
       })
     }
     catch (err) {
+      return response.status(400).json({
+        error: err
+      })
+    }
+
+  }
+  async update(request, response) {
+
+    try {
+      const id = request.params
+      const {
+        name,
+        email,
+        user,
+        password
+      } = request.body
+
+      const userUpdate = {
+        name,
+        email,
+        user,
+        password
+      }
+
+      await knex('user').update(userUpdate).where(id)
+
+      return response.status(200).json({
+        msg: 'Usuário alterado!'
+      })
+
+    } catch (err) {
       return response.status(400).json({
         error: err
       })
