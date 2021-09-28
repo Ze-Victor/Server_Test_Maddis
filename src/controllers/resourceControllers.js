@@ -10,15 +10,20 @@ class resourceControllers {
         .limit(5)
         .offset((page - 1) * 5)
 
+      const countObj = knex('resource').count()
+
       if (user_id) {
         query
           .where({ user_id })
           .join('user', 'user.id', '=', 'resource.user_id')
           .select('resource.*', 'user.name')
+
+        countObj
+          .where({ user_id })
       }
 
-      const [count] = await knex('resource').count()
-      console.log(count)
+      const [count] = await countObj
+      response.header('X-Total-Count', count["count"])
 
       const results = await query
 
