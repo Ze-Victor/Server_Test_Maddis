@@ -6,7 +6,8 @@ exports.up = async (knex) => knex.schema.createTable('resource', (table) => {
 
   table.integer('user_id').references('user.id').notNullable().onDelete('CASCADE');
 
-  table.timestamp(true, true);
+  table.timestamp('created_at').defaultTo(knex.fn.now());
+  table.timestamp('updated_at').defaultTo(knex.fn.now());
 
 });
 

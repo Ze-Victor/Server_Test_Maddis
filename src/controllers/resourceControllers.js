@@ -69,9 +69,13 @@ class resourceControllers {
   }
   async delete(request, response) {
     try {
-      const id = request.query.id
+      const id = request.params.id
 
       await knex('resource').where('id', id).del()
+
+      return response.status(200).json({
+        msg: 'Recurso deletado!'
+      })
 
     } catch (err) {
       return response.status(400).json({

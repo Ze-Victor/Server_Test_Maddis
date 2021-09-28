@@ -70,9 +70,14 @@ class userControllers {
   }
   async delete(request, response) {
     try {
-      const id = request.query.id
 
-      await knex('user').where(id).del()
+      const id = request.params.id
+
+      await knex('user').where('id', id).del()
+
+      return response.status(200).json({
+        msg: 'Usuário deletado!'
+      })
 
     } catch (err) {
       return response.status(400).json({
