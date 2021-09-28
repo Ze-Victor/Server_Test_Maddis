@@ -2,9 +2,34 @@ const knex = require('../database/index')
 
 class resourceControllers {
   async index(request, response) {
-    const resource = await knex('resource').select('*')
+    try {
 
-    return response.status(200).json(resource)
+      const { user_id, page = 1 } = request.query
+
+      const query = knex('resource')
+        .limit(5)
+        .offset((page - 1) * 5)
+
+      if (user_id) {
+        query
+          .where({ user_id })
+          .join('user', 'user.id', '=', 'resource.user_id')
+          .select('resource.*', 'user.name')
+      }
+
+      const [count] = await knex('resource').count()
+      console.log(count)
+
+      const results = await query
+
+      return response.status(200).json(results)
+
+    } catch (err) {
+      return response.status(400).json({
+        error: err
+      })
+    }
+
   }
   async create(request, response) {
 
