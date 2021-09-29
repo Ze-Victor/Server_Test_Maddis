@@ -1,4 +1,5 @@
 const knex = require('../database/index')
+const bcrypt = require('bcrypt')
 
 class userControllers {
   async index(request, response) {
@@ -17,11 +18,14 @@ class userControllers {
         password
       } = request.body
 
+      const salt = await bcrypt.genSalt(10) //O inteiro passado tem relação com o processamento
+      const passwordEncrypt = await bcrypt.hash(password, salt)
+
       const user_insert = {
         name,
         email,
         user,
-        password
+        password: passwordEncrypt
       }
 
       await knex('user').insert(user_insert)
@@ -48,11 +52,14 @@ class userControllers {
         password
       } = request.body
 
+      const salt = await bcrypt.genSalt(10) //O inteiro passado tem relação com o processamento
+      const passwordEncrypt = await bcrypt.hash(password, salt)
+
       const userUpdate = {
         name,
         email,
         user,
-        password
+        password: passwordEncrypt
       }
 
       await knex('user').update(userUpdate).where(id)

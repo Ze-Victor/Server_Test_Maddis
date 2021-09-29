@@ -20,6 +20,10 @@ class resourceControllers {
 
         countObj
           .where({ user_id })
+      } else {
+        query
+          .join('user', 'user.id', '=', 'resource.user_id')
+          .select('resource.*', 'user.name')
       }
 
       const [count] = await countObj
