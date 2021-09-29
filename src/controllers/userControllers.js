@@ -92,6 +92,33 @@ class userControllers {
       })
     }
   }
+  async login(request, response) {
+
+    try {
+      const {
+        user,
+        password
+      } = request.body
+
+      const user_find = await knex('user').where('user', user).select().first()
+
+      if (user_find && await bcrypt.compare(password, user_find.password)) {
+        return response.json({
+          msg: 'Usuário autenticado com sucesso!'
+        })
+      } else {
+        return response.json({
+          msg: 'Falha na autenticação. Usuário ou senha inválidos!'
+        })
+      }
+
+    } catch (err) {
+      return response.json({
+        error: err
+      })
+    }
+
+  }
 }
 
 module.exports = userControllers
