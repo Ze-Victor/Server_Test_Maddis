@@ -6,15 +6,23 @@
 - [Tecnologias utilizadas](#-tecnologias-utilizadas)
 - [Como baixar e executar?](#-como-baixar-e-executar)
   - [Baixando o projeto](#%EF%B8%8F-baixando-o-projeto)
-  - [Preparando o ambiente](#-preparando-o-ambiente)
-    - [Bancos de dados e tabelas](#-bancos-de-dados-e-tabelas)
-    - [Variáveis de ambiente](#-variáveis-de-ambiente)
-  - [Executando a API](#-executando-a-api)
-- [Rotas da API](#-rotas-da-api)
+- [Bancos de dados e tabelas](#-bancos-de-dados-e-tabelas)
+- [Variáveis de ambiente](#-variáveis-de-ambiente)
+- [Executando a API](#-executando-a-api)
 
 ## 🏷️ Sobre
 
+API desenvolvida para aperfeiçoamento de conhecimentos e treinamento para futuro desenvolvimento de plataforma web a ser lançada no mercado.
+
 ## 🚀 Tecnologias utilizadas
+
+As principais tecnologias utilizadas foram: 
+
+
+- [Node.js](https://nodejs.org/en/)
+- [Express](http://expressjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Knex](https://knexjs.org/)
 
 ## 📦 Como baixar e executar?
 
@@ -24,15 +32,51 @@
 - [Yarn](https://classic.yarnpkg.com/lang/en/)
 - [Docker](https://www.docker.com/)
 
+### ⬇️ Baixando o projeto
 
-### 🌎 Preparando o ambiente
+Abra o terminal do seu sistema operacional e execute os seguintes comandos:
+
+```bash
+  # Clonar o repositório
+  git clone https://github.com/Ze-Victor/Server_Test_Maddis.git
+
+  # Entrar no diretório
+  cd Server_Test_Maddis
+
+  # Instalar as dependências
+  yarn install
+```
 
 #### 🎲 Bancos de dados e tabelas
 
+Com o docker já intalado, execute o seguinte comando no terminal:
+
+```bash
+$ docker run --name pg -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -p 5432:5432 -d postgres
+```
+
+Após isso, crie o banco de dados com o seguinte comando: 
+
+```bash
+$ docker exec pg psql -c "CREATE DATABASE maddis_ef" -U root 
+```
+
 #### 🌐 Variáveis de ambiente
 
-## 📌 Rotas da API
+Na raíz do projeto, crie um arquivo `.env` e insira nele a linha abaixo:
 
-#### User
+```bash
+ACCESS_TOKEN_SECRET=plataforma_maddis_ef
+```
+Essa será nossa *secret* para autenticação.
 
-#### Resources
+### 🏃 Executando a API
+
+Com os bancos de dados em execução e estando no diretório da API, execute os seguintes comandos:
+
+```bash
+  # Criar as tabelas no PostgreSQL
+  yarn knex:migrate
+  # Executar o servidor
+  yarn dev
+```

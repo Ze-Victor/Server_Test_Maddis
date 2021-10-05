@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.get('/resource', midAuth)
 router.post('/resource', midAuth, midResource)
+
 router.put('/resource/:id', midResource)
 
 const resourceControllers = new ResourceControllers

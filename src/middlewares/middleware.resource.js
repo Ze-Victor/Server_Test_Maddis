@@ -1,19 +1,19 @@
-const Ajv = require('ajv')
-const ajv = new Ajv()
-const resourceSchema = require('../schema/schema.resource')
+const Ajv = require('ajv');
+const ajv = new Ajv();
+const resourceSchema = require('../schema/schema.resource');
 
 function validarRecurso(request, response, next) {
 
-  const resource = request.body
+  const resource = request.body;
 
-  const validate = ajv.compile(resourceSchema)
-  const valid = validate(resource)
+  const validate = ajv.compile(resourceSchema);
+  const valid = validate(resource);
 
   if (valid) {
-    next()
+    next();
   } else {
-    response.status(400).json({ msg: "Dados inválidos", erros: validate.errors })
+    response.status(400).json({ msg: "Dados inválidos", erros: validate.errors });
   }
 }
 
-module.exports = validarRecurso
+module.exports = validarRecurso;
