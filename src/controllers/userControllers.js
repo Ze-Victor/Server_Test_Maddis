@@ -1,5 +1,6 @@
 const knex = require('../database/index')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 class userControllers {
   async index(request, response) {
@@ -103,9 +104,20 @@ class userControllers {
       const user_find = await knex('user').where('user', user).select().first()
 
       if (user_find && await bcrypt.compare(password, user_find.password)) {
+        const token = jwt.sign({
+          sub: user_find.id,
+          iss: "maddisef_backend",
+          aud: "maddisef_frontend",
+          user: user_find.user,
+          email: user_find.email
+        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 300 })
+
+        response.header('Authorization', token)
+
         return response.json({
-          msg: 'Usuário autenticado com sucesso!'
+          msg: 'Usuário autenticado!'
         })
+
       } else {
         return response.json({
           msg: 'Falha na autenticação. Usuário ou senha inválidos!'

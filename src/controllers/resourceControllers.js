@@ -58,7 +58,7 @@ class resourceControllers {
         user_id
       }
 
-      await knex('resource').insert(request.body)
+      await knex('resource').insert(resource)
 
       return response.status(201).json({
         msg: 'Recurso inserido!'
