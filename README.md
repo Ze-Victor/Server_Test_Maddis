@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://github.com/Ze-Victor/Server_Test_Maddis/blob/master/README-en.md">English</a>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;
+  <a href="https://github.com/Ze-Victor/Server_Test_Maddis/blob/master/README.md">Português (Brasil)</a>
+</p>
+<hr>
+
 # Server_Test_Maddis
 
 # 🔖 Sumário
