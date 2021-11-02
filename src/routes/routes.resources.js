@@ -12,6 +12,7 @@ router.put('/resource/:id', midResource)
 const resourceControllers = new ResourceControllers
 
 router.get('/resource', resourceControllers.index)
+router.get('/resource/:user_id', resourceControllers.show)
 router.post('/resource', resourceControllers.create)
 router.put('/resource/:id', resourceControllers.update)
 router.delete('/resource/:id', resourceControllers.delete)
