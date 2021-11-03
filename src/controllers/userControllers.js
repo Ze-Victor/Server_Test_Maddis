@@ -114,18 +114,18 @@ class userControllers {
 
         response.header('Authorization', token)
 
-        return response.json({
-          msg: 'Usuário autenticado!'
+        return response.status(200).json({
+          token,
         })
 
       } else {
-        return response.json({
+        return response.status(401).json({
           msg: 'Falha na autenticação. Usuário ou senha inválidos!'
         })
       }
 
     } catch (err) {
-      return response.json({
+      return response.status(400).json({
         error: err
       })
     }

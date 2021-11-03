@@ -4,33 +4,10 @@ class resourceControllers {
   async index(request, response) {
     try {
 
-      const { user_id, page = 1 } = request.query
-
-      const query = knex('resource')
-        .limit(5)
-        .offset((page - 1) * 5)
-
-      const countObj = knex('resource').count()
-
-      if (user_id) {
-        query
-          .where({ user_id })
-          .join('user', 'user.id', '=', 'resource.user_id')
-          .select('resource.*', 'user.name')
-
-        countObj
-          .where({ user_id })
-      } else {
-        query
-          .join('user', 'user.id', '=', 'resource.user_id')
-          .select('resource.*', 'user.name')
-      }
-
-      const [count] = await countObj
-      response.header('X-Total-Count', count["count"])
-
-      const results = await query
-
+        const results = await knex('resource')
+                        .join('user', 'user.id', '=', 'resource.user_id')
+                        .select('resource.*', 'user.name')
+  
       return response.status(200).json(results)
 
     } catch (err) {
@@ -39,6 +16,40 @@ class resourceControllers {
       })
     }
 
+  }
+  async show(request, response){
+
+    const {user_id} = request.params;
+
+    try {
+      const results = await knex('resource')
+          .where({ user_id })
+          .join('user', 'user.id', '=', 'resource.user_id')
+          .select('resource.*', 'user.name')
+
+      return response.status(200).json(results)
+    } catch (err) {
+      return response.status(400).json({
+        error: err
+      })
+    }
+  }
+  async show_unique(request, response){
+    const {id} = request.params;
+
+    try {
+      const results = await knex('resource')
+          .where({ id })
+          .select()
+          .first();
+
+      return response.status(200).json(results)
+      
+    } catch (err) {
+      return response.status(400).json({
+        error: err
+      })
+    }
   }
   async create(request, response) {
 
