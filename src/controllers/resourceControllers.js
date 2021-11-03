@@ -34,6 +34,23 @@ class resourceControllers {
       })
     }
   }
+  async show_unique(request, response){
+    const {id} = request.params;
+
+    try {
+      const results = await knex('resource')
+          .where({ id })
+          .select()
+          .first();
+
+      return response.status(200).json(results)
+      
+    } catch (err) {
+      return response.status(400).json({
+        error: err
+      })
+    }
+  }
   async create(request, response) {
 
     try {
