@@ -5,7 +5,8 @@ module.exports = {
     title: { type: "string" },
     description: { type: "string" },
     content: { type: "string" },
-    user_id: { type: "integer" }
+    file: {type: "string"},
+    user_id: { type: "integer" },
 
   },
   required: ["title", "description", "content", "user_id"],

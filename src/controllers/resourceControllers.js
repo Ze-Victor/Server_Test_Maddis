@@ -7,6 +7,7 @@ class resourceControllers {
         const results = await knex('resource')
                         .join('user', 'user.id', '=', 'resource.user_id')
                         .select('resource.*', 'user.name')
+                        .orderBy('id');
   
       return response.status(200).json(results)
 
@@ -26,6 +27,7 @@ class resourceControllers {
           .where({ user_id })
           .join('user', 'user.id', '=', 'resource.user_id')
           .select('resource.*', 'user.name')
+          .orderBy('id');
 
       return response.status(200).json(results)
     } catch (err) {
@@ -62,6 +64,25 @@ class resourceControllers {
         user_id
       } = request.body
 
+      if(request.file){
+        const file = `/static/uploads/${request.file.filename}`;
+
+        const resource = {
+          title,
+          description,
+          content,
+          file,
+          user_id
+        }
+
+        await knex('resource').insert(resource)
+
+        return response.status(201).json({
+          msg: 'Recurso inserido!'
+        })
+
+      }
+
       const resource = {
         title,
         description,
@@ -71,9 +92,11 @@ class resourceControllers {
 
       await knex('resource').insert(resource)
 
-      return response.status(201).json({
-        msg: 'Recurso inserido!'
+        return response.status(201).json({
+          msg: 'Recurso inserido!'
       })
+
+      
     } catch (err) {
       return response.status(400).json({
         error: err
