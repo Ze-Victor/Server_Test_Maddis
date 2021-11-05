@@ -9,7 +9,9 @@ const PORT = process.env.PORT || 3333
 const app = express()
 
 app.use(cors())
+app.use('/static', express.static('public'))
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(routesUser)
 app.use(routesResource)
 
