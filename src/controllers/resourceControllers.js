@@ -2,12 +2,19 @@ const knex = require('../database/index')
 
 class resourceControllers {
   async index(request, response) {
+
+    const { filter } = request.query;
+
     try {
 
-        const results = await knex('resource')
+        const resources = await knex('resource')
                         .join('user', 'user.id', '=', 'resource.user_id')
                         .select('resource.*', 'user.name')
                         .orderBy('id');
+
+        const results = filter 
+                        ? resources.filter(resource => resource.title.includes(filter))
+                        : resources;
   
       return response.status(200).json(results)
 
@@ -64,10 +71,9 @@ class resourceControllers {
         user_id
       } = request.body
 
-      if(request.file){
-        const file = `/static/uploads/${request.file.filename}`;
+      const file = request.file ? `/static/uploads/${request.file.filename}` : "";
 
-        const resource = {
+      const resource = {
           title,
           description,
           content,
@@ -75,28 +81,12 @@ class resourceControllers {
           user_id
         }
 
-        await knex('resource').insert(resource)
+       await knex('resource').insert(resource)
 
-        return response.status(201).json({
-          msg: 'Recurso inserido!'
-        })
-
-      }
-
-      const resource = {
-        title,
-        description,
-        content,
-        user_id
-      }
-
-      await knex('resource').insert(resource)
-
-        return response.status(201).json({
+      return response.status(201).json({
           msg: 'Recurso inserido!'
       })
-
-      
+  
     } catch (err) {
       return response.status(400).json({
         error: err

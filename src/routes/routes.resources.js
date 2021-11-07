@@ -6,7 +6,7 @@ const multer = require('multer')
 const multerConfig = require('../config/multer')
 const router = express.Router()
 
-router.get('/resource', midAuth)
+//router.get('/resource', midAuth)
 
 router.post('/resource', multer(multerConfig).single('file'), midResource)
 

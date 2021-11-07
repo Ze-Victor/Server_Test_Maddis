@@ -11,7 +11,7 @@ function validarRecurso(request, response, next) {
     user_id
   }= request.body;
 
-  const file = request.file.filename;
+  const file = request.file ? request.file.filename : "";
 
   const resource = {
     title,
